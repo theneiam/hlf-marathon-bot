@@ -59,9 +59,15 @@ const promoCommand = async ({ reply, from, message: { text } }) => {
     }
 
     const promoCodes = await Promo.find({ isUsed: false }).limit(codeQty);
-    const ids = promoCodes.map(({ _id }) => _id);
-    console.log(ids);
 
+    if (!promoCodes || promoCodes.length) {
+      return reply(
+        `🤷‍ Очень жаль но промо-коды закончились!`,
+        Extra.markdown()
+      );
+    }
+
+    const ids = promoCodes.map(({ _id }) => _id);
     // update used promo with data and save
     const updateResult = await Promo.updateMany(
       { _id: { $in: promoCodes.map(({ _id }) => _id) } },
