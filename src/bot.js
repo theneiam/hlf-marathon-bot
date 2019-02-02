@@ -60,7 +60,7 @@ const promoCommand = async ({ reply, from, message: { text } }) => {
 
     const promoCodes = await Promo.find({ isUsed: false }).limit(codeQty);
 
-    if (!promoCodes || promoCodes.length) {
+    if (!promoCodes || !promoCodes.length) {
       return reply(
         `🤷‍ Очень жаль но промо-коды закончились!`,
         Extra.markdown()
